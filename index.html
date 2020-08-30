@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>Weather Dashboard</title>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/0ad6dfef5e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Begin header -->
+    <header class="bg-secondary border border-dark text-center text-white">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <!-- Begin Main Content Container -->
+    <div class="container-fluid">
+        <div class="row">
+            <form class="form col-md-2 border border-dark m-3">
+                <!-- sub row -->
+                <div class="form-row">
+                    <div class="col">
+                        <div>Search for City:</div>
+                    </div>
+                </div>
+                <!-- sub row -->
+                <div class="form-row">
+                    <div class="col-9">
+                        <input id="citySearch"type="text" class="form-control form-inline" placeholder="Enter City">
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search-location"></i></button>
+                    </div>
+                </div>
+                <!-- sub row -->
+                <div class="form-row">
+                    <ul class="col-12 mt-3 mx-auto border border-dark list-group" id="searchedCities">
+                        <li class="list-group-item">
+
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <div class="col-md-8 m-3">
+                <!-- sub row -->
+                <div class="row">
+                    <div class="text-dark jumbotron col-md-12">
+                        <h2 id="currentCity">
+
+                        </h2>
+                        <div>
+                            <p>Temperature: <span id="temperature"></span></p>
+                        </div>
+                        <div>
+                            <p>Humidity: <span id="humidity"></span></p>
+                        </div>
+                        <div>
+                            <p>Wind Speed: <span id="windSpeed"></span></p>
+                        </div>
+                        <div>
+                            <p>UV Index: <span id="uvIndex"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- sub row -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <h2 class="col-12">5-Day Forecast:</h2>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="text-light col-md-2 border border-dark m-3 bg-primary">
+                                <div id="forecastDate"></div>
+                                <div id="forecastTemp"></div>
+                                <div id="forecastHumidity"></div>
+                            </div>
+                            <div class="text-light col-md-2 border border-dark m-3 bg-primary">
+                                <div id="forecastDate"></div>
+                                <div id="forecastTemp"></div>
+                                <div id="forecastHumidity"></div>
+                            </div>
+                            <div class="text-light col-md-2 border border-dark m-3 bg-primary">
+                                <div id="forecastDate"></div>
+                                <div id="forecastTemp"></div>
+                                <div id="forecastHumidity"></div>
+                            </div>
+                            <div class="text-light col-md-2 border border-dark m-3 bg-primary">
+                                <div id="forecastDate"></div>
+                                <div id="forecastTemp"></div>
+                                <div id="forecastHumidity"></div>
+                            </div>
+                            <div class="text-light col-md-2 border border-dark m-3 bg-primary">
+                                <div id="forecastDate"></div>
+                                <div id="forecastTemp"></div>
+                                <div id="forecastHumidity"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script src="script.js"></script>
+</body>
+
+</html>
