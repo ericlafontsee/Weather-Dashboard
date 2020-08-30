@@ -38,14 +38,28 @@ $("button").on("click", function (event) {
         .then(function (response) {
             console.log(response);
             var tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
-            var currentDate = response.list[0].dt_txt;
-            console.log(currentDate);
+            var unformatedDate = response.list[0].dt_txt.split(" ")[0];
+            var day = unformatedDate.split("-")[2];
+            var month = unformatedDate.split("-")[1].charAt(1);
+            var year = unformatedDate.split("-")[0];
+            var currentDate = $("<span>").text(" (" + month + "/" + day + "/" + year + ") ");
             $("#currentCity").text(response.city.name);
+            $("#currentCity").append(currentDate);
             $("#temperature").text(tempF.toFixed(2) + " \xB0F");
             $("#humidity").text(response.list[0].main.humidity + " %");
             $("#windSpeed").text(response.list[0].wind.speed + " MPH");
             //  $("#uvIndex").text(response.)
+
+            var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?appid=7e4c7478cc7ee1e11440bf55a8358ec3&lat=" + response.city.coord.lat + "&lon=" + response.city.coord.lat;
+            // var uvIndexURL = "http://api.openweathermap.org/data/2.5/uvi?appid="+ APIKey+ "&lat={lat}&lon={lon}
+            $.ajax({
+                url: uvIndexURL,
+                method: "GET"
+            }).then(function (responseUV) {
+                $("#uvIndex").text(responseUV.value);
+               
         });
+}); 
 });
 
 init();
