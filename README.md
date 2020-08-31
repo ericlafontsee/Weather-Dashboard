@@ -1,9 +1,9 @@
 # Weather-Dashboard
 
 ## Description
-For this project I created a weather application using the Open Weather Map API.   
+For this project, I created a weather application using the Open Weather Map API.   
 Located on the left is a search bar where the user can input any city of their choosing.  
-The page will populate with the current weather as well as a 5 day forecast. Underneath  
+The page will populate with the current weather as well as a 5-day forecast. Underneath  
 the search bar will be the user's search history. By clicking any of the recent searches,  
 the user can repopulate the page with that city's current weather and forecast.  
 When the application is exited and reopened, the user's last search result will be displayed  
@@ -14,10 +14,10 @@ This Work Day Scheduler is deployed to GitHub Pages:
 https://ericlafontsee.github.io/Weather-Dashboard/
 
 ## Features
-* Searched city's current temperature, wind-speed and humidity readings and the 5 day forecast.
+* Searched city's current temperature, wind speed, and humidity readings and the 5 day forecast.
 * Under current weather will be a color coded UV index reading indicating favorable, moderate,  
 or severe conditions.
-* To access search history, user simply clicks the result in the left pane.
+* To access search history, the user simply clicks the result in the left pane.
 * All searches are stored in local storage.
 
 
@@ -38,7 +38,7 @@ Background image from www.subtlepatterns.com
 To build or edit this application you will need Visual Studio Code or a text editor
 
 ## Installation
-To access Open Weather Map, you need to request an API key and use the following url to query:
+To access Open Weather Map, you need to request an API key and use the following URL to query:
 ```
 http://api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
 ```
