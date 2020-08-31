@@ -22,7 +22,7 @@
 
 <body>
     <!-- Begin header -->
-    <header class="bg-secondary border border-dark text-center text-white">
+    <header class="bg-dark border border-dark text-center text-white">
         <h1>Weather Dashboard</h1>
     </header>
     <!-- Begin Main Content Container -->
@@ -31,22 +31,22 @@
             <form class="form col-md-2 border border-dark m-3">
                 <!-- sub row -->
                 <div class="form-row">
-                    <div class="col">
+                    <div class="col p-2">
                         <div>Search for City:</div>
                     </div>
                 </div>
                 <!-- sub row -->
                 <div class="form-row">
-                    <div class="col-9">
+                    <div class="col-10 mx-auto mt-3 p-0">
                         <input id="citySearch" type="text" class="form-control form-inline" placeholder="Enter City">
                     </div>
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search-location"></i></button>
+                    <div class="col-2 mx-auto mt-3">
+                        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><i class="fas fa-search-location"></i></button>
                     </div>
                 </div>
                 <!-- sub row -->
                 <div class="form-row">
-                    <ul class="col-12 mt-3 mx-auto border border-dark list-group" id="searchedCities">
+                    <ul class="col-12 mt-3 p-0 list-group" id="searchedCities">
                         
                     </ul>
                 </div>
@@ -54,7 +54,7 @@
             <div class="col-md-8 m-3">
                 <!-- sub row -->
                 <div class="row">
-                    <div class="text-dark jumbotron bg-light col-md-12 m-0 p-0">
+                    <div class="text-dark jumbotron bg-white col-md-12 m-0 p-0">
                         <h2 id="currentCity" class="text-dark p-3">
 
                         </h2>
@@ -76,7 +76,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="row">
-                            <h2 class="col-12">5-Day Forecast:</h2>
+                            <h2 class="col-12 mt-3 p-0">5-Day Forecast:</h2>
                         </div>
                     </div>
                     <div class="col-12">

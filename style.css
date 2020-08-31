@@ -1,0 +1,22 @@
+body {
+    background-image: url("images/weather.png");
+    background-repeat: repeat;
+    background-position: center;
+  }
+.jumbotron,
+.card {
+    border: 3px outset #6c757d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    font-weight: bold;
+}
+.card{
+    
+    font-size: 20px;
+}
+  
+
+.card {
+    box-sizing: border-box;
+    width: 18%;
+    margin: 10px auto;
+}

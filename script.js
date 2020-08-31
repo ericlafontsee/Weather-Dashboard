@@ -1,5 +1,4 @@
 var cities = [];
-// var $inputCity;
 var lastSearch;
 
 function init() {
@@ -7,8 +6,7 @@ function init() {
     if (storedEvents) {
         cities = storedEvents;
     }
-  
-    lastSearch = cities[cities.length-1];
+    lastSearch = cities[cities.length - 1];
     renderEvents();
     weatherNow(lastSearch);
 }
@@ -17,21 +15,23 @@ function renderEvents() {
     $("#searchedCities").empty();
     for (var i = cities.length - 1; i >= 0; i--) {
         var index = cities[i];
-        var li = $("<li>");
-        li.addClass("list-group-item btn btn-secondary active m-2");
-        li.text(index);
-        $("#searchedCities").append(li);
+    
+            var li = $("<li>");
+            li.addClass("list-group-item btn btn-secondary active mb-3 border border-white");
+            li.text(index);
+            $("#searchedCities").append(li);
+    
     }
 }
 
 function storeEvents() {
     localStorage.setItem("cities", JSON.stringify(cities));
 }
+
 $(document).on("click", "li", function () {
     $("#forecast").empty();
-
     searchHistory = $(this).text();
-   weatherNow(searchHistory);
+    weatherNow(searchHistory);
 });
 
 $("button").on("click", function () {
@@ -40,10 +40,10 @@ $("button").on("click", function () {
     $("#forecast").empty();
     //grab the value of the input field
     var $input = $("input").val();
-    if($input === ""){
+    if ($input === "") {
         alert("Enter a city")
-    }else{
-    weatherNow($input);
+    } else {
+        weatherNow($input);
     }
 });
 
@@ -80,32 +80,31 @@ function weatherNow(city) {
                 url: uvIndexURL,
                 method: "GET"
             }).then(function (responseUV) {
-                var uvIndex = responseUV.value;
+                var uvIndex = parseInt(responseUV.value);
                 $("#uvIndexSpan").text(uvIndex);
                 var uvColor;
-                if (uvIndex < 3) {
+                if (uvIndex <= 2) {
                     uvColor = "green";
                 }
-                else if (uvIndex > 2 || uvIndex < 6) {
+                else if (uvIndex >= 3 || uvIndex <= 5) {
                     uvColor = "yellow";
                 }
-                else if (uvIndex > 5 || uvIndex < 8) {
+                else if (uvIndex >= 6 || uvIndex <= 7) {
                     uvColor = "orange";
                 }
-                else if (uvIndex > 7 || uvIndex < 11) {
+                else if (uvIndex >= 8 || uvIndex <= 10) {
                     uvColor = "red";
                 }
                 else {
                     uvColor = "purple";
                 }
-                $("#uvIndexSpan").attr("style", ("background-color:" + uvColor));
+                $("#uvIndexSpan").attr("style", ("background-color: " + uvColor));
+
             });
         });
     forecast(city);
 }
 function forecast(city) {
-    // var $inputCity = $("input").val();
-
     storeEvents();
     renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
@@ -118,7 +117,6 @@ function forecast(city) {
             for (var i = 0; i < response.list.length; i++) {
                 var tempF = (response.list[i].main.temp - 273.15) * 1.80 + 32;
                 var unformatedDate = response.list[i].dt_txt.split(" ")[0];
-                console.log(unformatedDate);
                 var day = unformatedDate.split("-")[2];
                 var month = unformatedDate.split("-")[1].charAt(1);
                 var year = unformatedDate.split("-")[0];
@@ -126,11 +124,11 @@ function forecast(city) {
                 var iconURL = "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png";
                 var weatherIcon = $("<img>").attr("src", iconURL);
                 if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    var card = $("<div>").attr("class", "card text-light text-center col-md-2 border border-dark m-3 bg-primary");
+                    var card = $("<div>").attr("class", "card text-light text-center border border-dark bg-primary");
                     $("#forecast").append(card);
-                    var cardBody = $("<div>").attr("class", "card-body p-2 m-0");
+                    var cardBody = $("<div>").attr("class", "card-body");
                     card.append(cardBody);
-                    var cardDate = $("<h6>").attr("class", "card-title text-center").text(currentDate);
+                    var cardDate = $("<h4>").attr("class", "card-title text-center p-2").text(currentDate);
                     cardBody.append(cardDate);
                     cardBody.append(weatherIcon);
                     var cardTemp = $("<p>").attr("class", "card-text").text("Temp: " + tempF.toFixed(2) + " \xB0F");
