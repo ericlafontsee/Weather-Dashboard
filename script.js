@@ -31,10 +31,10 @@ function renderEvents(cities) {
     $("#searchedCities").empty();
     for (var i = cities.length - 1; i >= 0; i--) {
         var index = cities[i];
-            var li = $("<li>");
-            li.addClass("list-group-item btn btn-secondary active mb-3 border border-white");
-            li.text(index);
-            $("#searchedCities").append(li);
+        var li = $("<li>");
+        li.addClass("list-group-item btn btn-secondary active mb-3 border border-white");
+        li.text(index);
+        $("#searchedCities").append(li);
     }
 }
 
@@ -44,13 +44,13 @@ function storeEvents(input) {
     localStorage.setItem("cities", JSON.stringify(cities));
 }
 
-$(document).on("click", "li", function () {
+$(document).on("click", "li", function() {
     $("#forecast").empty();
     searchHistory = $(this).text();
     weatherNow(searchHistory);
 });
 
-$("#searchBtn").on("click", function () {
+$("#searchBtn").on("click", function() {
     //don't refresh the screen
     event.preventDefault();
     $("#forecast").empty();
@@ -69,10 +69,10 @@ function weatherNow(city) {
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
-        url: queryURL,
-        method: "GET"
-    })
-        .then(function (response) {
+            url: queryURL,
+            method: "GET"
+        })
+        .then(function(response) {
             console.log(response);
             var tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
             var unformatedDate = response.list[0].dt_txt.split(" ")[0];
@@ -81,7 +81,7 @@ function weatherNow(city) {
             var year = unformatedDate.split("-")[0];
             var currentDate = $("<span>").text(" (" + month + "/" + day + "/" + year + ") ");
             var iconURL = "https://openweathermap.org/img/wn/" + response.list[0].weather[0].icon + "@2x.png";
-            var weatherIcon = $("<img>").attr("src", iconURL);
+            var weatherIcon = $("<img>").attr("src", iconURL).addClass("img-fluid");
             $("#currentCity").text(response.city.name);
             $("#currentCity").append(currentDate);
             $("#currentCity").append(weatherIcon);
@@ -93,23 +93,19 @@ function weatherNow(city) {
             $.ajax({
                 url: uvIndexURL,
                 method: "GET"
-            }).then(function (responseUV) {
+            }).then(function(responseUV) {
                 var uvIndex = responseUV.value;
                 $("#uvIndexSpan").text(uvIndex);
                 var uvColor;
                 if (uvIndex < 3) {
                     uvColor = "#00FF7F";
-                }
-                else if (uvIndex >= 3 && uvIndex <= 5) {
+                } else if (uvIndex >= 3 && uvIndex <= 5) {
                     uvColor = "yellow";
-                }
-                else if (uvIndex >= 6 && uvIndex <= 7) {
+                } else if (uvIndex >= 6 && uvIndex <= 7) {
                     uvColor = "orange";
-                }
-                else if (uvIndex >= 8 && uvIndex <= 10) {
+                } else if (uvIndex >= 8 && uvIndex <= 10) {
                     uvColor = "#FF6347";
-                }
-                else if (uvIndex > 10) {
+                } else if (uvIndex > 10) {
                     uvColor = "#DDA0DD";
                     $("#uvIndexSpan").attr("style", "color: white");
                 }
@@ -120,15 +116,16 @@ function weatherNow(city) {
         });
     forecast(city);
 }
+
 function forecast(city) {
     // renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
-        url: queryURL,
-        method: "GET"
-    })
-        .then(function (response) {
+            url: queryURL,
+            method: "GET"
+        })
+        .then(function(response) {
             for (var i = 0; i < response.list.length; i++) {
                 var tempF = (response.list[i].main.temp - 273.15) * 1.80 + 32;
                 var unformatedDate = response.list[i].dt_txt.split(" ")[0];
