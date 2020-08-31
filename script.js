@@ -15,12 +15,14 @@ function renderEvents() {
     $("#searchedCities").empty();
     for (var i = cities.length - 1; i >= 0; i--) {
         var index = cities[i];
-    
+        if (index == null) {
+            console.log("works");
+        } else if ("#citySearch") {
             var li = $("<li>");
             li.addClass("list-group-item btn btn-secondary active mb-3 border border-white");
             li.text(index);
             $("#searchedCities").append(li);
-    
+        }
     }
 }
 
@@ -39,7 +41,7 @@ $("button").on("click", function () {
     event.preventDefault();
     $("#forecast").empty();
     //grab the value of the input field
-    var $input = $("input").val();
+    var $input = $("input").val().trim();
     if ($input === "") {
         alert("Enter a city")
     } else {
@@ -80,24 +82,25 @@ function weatherNow(city) {
                 url: uvIndexURL,
                 method: "GET"
             }).then(function (responseUV) {
-                var uvIndex = parseInt(responseUV.value);
+                var uvIndex = responseUV.value;
                 $("#uvIndexSpan").text(uvIndex);
                 var uvColor;
                 if (uvIndex <= 2) {
                     uvColor = "green";
                 }
-                else if (uvIndex >= 3 || uvIndex <= 5) {
+                else if (uvIndex >= 3 && uvIndex <= 5) {
                     uvColor = "yellow";
                 }
-                else if (uvIndex >= 6 || uvIndex <= 7) {
+                else if (uvIndex >= 6 && uvIndex <= 7) {
                     uvColor = "orange";
                 }
-                else if (uvIndex >= 8 || uvIndex <= 10) {
+                else if (uvIndex >= 8 && uvIndex <= 10) {
                     uvColor = "red";
                 }
                 else {
                     uvColor = "purple";
                 }
+                console.log(uvIndex);
                 $("#uvIndexSpan").attr("style", ("background-color: " + uvColor));
 
             });
