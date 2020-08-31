@@ -97,7 +97,7 @@ function weatherNow(city) {
                 var uvIndex = responseUV.value;
                 $("#uvIndexSpan").text(uvIndex);
                 var uvColor;
-                if (uvIndex <= 2) {
+                if (uvIndex < 3) {
                     uvColor = "#00FF7F";
                 }
                 else if (uvIndex >= 3 && uvIndex <= 5) {
