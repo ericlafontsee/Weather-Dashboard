@@ -1,19 +1,24 @@
 var cities = [];
-var $inputCity
+// var $inputCity;
+var lastSearch;
+
 function init() {
     var storedEvents = JSON.parse(localStorage.getItem("cities"));
     if (storedEvents) {
         cities = storedEvents;
     }
+  
+    lastSearch = cities[cities.length-1];
     renderEvents();
+    weatherNow(lastSearch);
 }
 
 function renderEvents() {
     $("#searchedCities").empty();
-    for (var i = 0; i < cities.length; i++) {
+    for (var i = cities.length - 1; i >= 0; i--) {
         var index = cities[i];
         var li = $("<li>");
-        li.addClass("list-group-item");
+        li.addClass("list-group-item btn btn-secondary active m-2");
         li.text(index);
         $("#searchedCities").append(li);
     }
@@ -22,16 +27,32 @@ function renderEvents() {
 function storeEvents() {
     localStorage.setItem("cities", JSON.stringify(cities));
 }
+$(document).on("click", "li", function () {
+    $("#forecast").empty();
 
+    searchHistory = $(this).text();
+   weatherNow(searchHistory);
+});
 
-$("button").on("click", function (event) {
+$("button").on("click", function () {
+    //don't refresh the screen
     event.preventDefault();
-    $inputCity = $("input").val();
-    cities.push($inputCity);
+    $("#forecast").empty();
+    //grab the value of the input field
+    var $input = $("input").val();
+    if($input === ""){
+        alert("Enter a city")
+    }else{
+    weatherNow($input);
+    }
+});
+
+function weatherNow(city) {
+    cities.push(city);
     storeEvents();
     renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + $inputCity.trim() + "&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -80,15 +101,15 @@ $("button").on("click", function (event) {
                 $("#uvIndexSpan").attr("style", ("background-color:" + uvColor));
             });
         });
-    forecast();
-});
-function forecast() {
+    forecast(city);
+}
+function forecast(city) {
     // var $inputCity = $("input").val();
 
     storeEvents();
     renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + $inputCity.trim() + "&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -121,6 +142,5 @@ function forecast() {
             };
         });
 }
-console.log(window);
 
 init();
