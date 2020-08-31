@@ -1,32 +1,46 @@
-var cities = [];
-var lastSearch;
-
 function init() {
     var storedEvents = JSON.parse(localStorage.getItem("cities"));
-    if (storedEvents) {
-        cities = storedEvents;
-    }
-    lastSearch = cities[cities.length - 1];
-    renderEvents();
+    var cities = getCities();
+    var lastSearch = getLastSearch();
+    renderEvents(cities);
     weatherNow(lastSearch);
 }
 
-function renderEvents() {
+function getCities() {
+    var cities = JSON.parse(localStorage.getItem("cities"));
+    if (!cities) cities = [];
+    return cities;
+}
+
+function getLastSearch() {
+    var cities = getCities();
+    return cities[cities.length - 1];
+}
+
+function removeCity(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    var cities = getCities();
+    var indexToRemove = $(this).attr("id");
+    cities.splice(indexToRemove, 1);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    renderEvents(cities);
+}
+
+function renderEvents(cities) {
     $("#searchedCities").empty();
     for (var i = cities.length - 1; i >= 0; i--) {
         var index = cities[i];
-        if (index == null) {
-            console.log("works");
-        } else if ("#citySearch") {
             var li = $("<li>");
             li.addClass("list-group-item btn btn-secondary active mb-3 border border-white");
             li.text(index);
             $("#searchedCities").append(li);
-        }
     }
 }
 
-function storeEvents() {
+function storeEvents(input) {
+    let cities = getCities();
+    cities.push(input);
     localStorage.setItem("cities", JSON.stringify(cities));
 }
 
@@ -36,23 +50,22 @@ $(document).on("click", "li", function () {
     weatherNow(searchHistory);
 });
 
-$("button").on("click", function () {
+$("#searchBtn").on("click", function () {
     //don't refresh the screen
     event.preventDefault();
     $("#forecast").empty();
     //grab the value of the input field
-    var $input = $("input").val().trim();
-    if ($input === "") {
+    var input = $("input").val().trim();
+    if (input === "") {
         alert("Enter a city")
     } else {
-        weatherNow($input);
+        weatherNow(input);
     }
+    storeEvents(input);
+    removeCity();
 });
 
 function weatherNow(city) {
-    cities.push(city);
-    storeEvents();
-    renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
@@ -77,7 +90,6 @@ function weatherNow(city) {
             $("#windSpeed").text(response.list[0].wind.speed + " MPH");
 
             var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?appid=7e4c7478cc7ee1e11440bf55a8358ec3&lat=" + response.city.coord.lat + "&lon=" + response.city.coord.lat;
-            // var uvIndexURL = "http://api.openweathermap.org/data/2.5/uvi?appid="+ APIKey+ "&lat={lat}&lon={lon}
             $.ajax({
                 url: uvIndexURL,
                 method: "GET"
@@ -86,7 +98,7 @@ function weatherNow(city) {
                 $("#uvIndexSpan").text(uvIndex);
                 var uvColor;
                 if (uvIndex <= 2) {
-                    uvColor = "green";
+                    uvColor = "#00FF7F";
                 }
                 else if (uvIndex >= 3 && uvIndex <= 5) {
                     uvColor = "yellow";
@@ -95,10 +107,11 @@ function weatherNow(city) {
                     uvColor = "orange";
                 }
                 else if (uvIndex >= 8 && uvIndex <= 10) {
-                    uvColor = "red";
+                    uvColor = "#FF6347";
                 }
-                else {
-                    uvColor = "purple";
+                else if (uvIndex > 10) {
+                    uvColor = "#DDA0DD";
+                    $("#uvIndexSpan").attr("style", "color: white");
                 }
                 console.log(uvIndex);
                 $("#uvIndexSpan").attr("style", ("background-color: " + uvColor));
@@ -108,8 +121,7 @@ function weatherNow(city) {
     forecast(city);
 }
 function forecast(city) {
-    storeEvents();
-    renderEvents();
+    // renderEvents();
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
