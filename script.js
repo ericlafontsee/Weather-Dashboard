@@ -1,22 +1,25 @@
+//Populates page with the weather from user's last search
 function init() {
-    var storedEvents = JSON.parse(localStorage.getItem("cities"));
     var cities = getCities();
     var lastSearch = getLastSearch();
     renderEvents(cities);
     weatherNow(lastSearch);
 }
 
+//Grabs searched cities from local storage
 function getCities() {
     var cities = JSON.parse(localStorage.getItem("cities"));
     if (!cities) cities = [];
     return cities;
 }
 
+//Grabs the last item in the cities array, which is the user's last search
 function getLastSearch() {
     var cities = getCities();
     return cities[cities.length - 1];
 }
 
+//removes the last item in search results
 function removeCity(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -27,6 +30,7 @@ function removeCity(event) {
     renderEvents(cities);
 }
 
+//populates the search results list
 function renderEvents(cities) {
     $("#searchedCities").empty();
     for (var i = cities.length - 1; i >= 0; i--) {
@@ -38,23 +42,24 @@ function renderEvents(cities) {
     }
 }
 
+//sends searched cities to local storage
 function storeEvents(input) {
     let cities = getCities();
     cities.push(input);
     localStorage.setItem("cities", JSON.stringify(cities));
 }
 
+//If search result is clicked, the page will populate with that city's weather
 $(document).on("click", "li", function() {
     $("#forecast").empty();
     searchHistory = $(this).text();
     weatherNow(searchHistory);
 });
 
+//Click event on search button will populate page with input city's weather
 $("#searchBtn").on("click", function() {
-    //don't refresh the screen
     event.preventDefault();
     $("#forecast").empty();
-    //grab the value of the input field
     var input = $("input").val().trim();
     if (input === "") {
         alert("Enter a city")
@@ -65,6 +70,7 @@ $("#searchBtn").on("click", function() {
     removeCity();
 });
 
+//Queries OWM and sets data to variables that are then set as the text values for corresponding <divs>
 function weatherNow(city) {
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
@@ -89,6 +95,7 @@ function weatherNow(city) {
             $("#humidity").text(response.list[0].main.humidity + " %");
             $("#windSpeed").text(response.list[0].wind.speed + " MPH");
 
+            //Queries OWM to grab UV index and compares data against conditional to color code the <div> based on severity
             var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?appid=7e4c7478cc7ee1e11440bf55a8358ec3&lat=" + response.city.coord.lat + "&lon=" + response.city.coord.lat;
             $.ajax({
                 url: uvIndexURL,
@@ -99,13 +106,13 @@ function weatherNow(city) {
                 var uvColor;
                 if (uvIndex < 3) {
                     uvColor = "#00FF7F";
-                } else if (uvIndex >= 3 && uvIndex <= 5) {
+                } else if (uvIndex >= 3 && uvIndex < 6) {
                     uvColor = "yellow";
-                } else if (uvIndex >= 6 && uvIndex <= 7) {
+                } else if (uvIndex >= 6 && uvIndex < 8) {
                     uvColor = "orange";
-                } else if (uvIndex >= 8 && uvIndex <= 10) {
+                } else if (uvIndex >= 8 && uvIndex < 11) {
                     uvColor = "#FF6347";
-                } else if (uvIndex > 10) {
+                } else if (uvIndex > 11) {
                     uvColor = "#DDA0DD";
                     $("#uvIndexSpan").attr("style", "color: white");
                 }
@@ -117,8 +124,9 @@ function weatherNow(city) {
     forecast(city);
 }
 
+//Queries OWM and grabs five day forecast
 function forecast(city) {
-    // renderEvents();
+    // renderEvents(city);
     var APIKey = "425f2fa92724cf0af5e0b7fdfb38e26e";
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     $.ajax({
