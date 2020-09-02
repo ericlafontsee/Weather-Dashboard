@@ -82,6 +82,8 @@ To utilize Bootstrap components, grid, and other styles, insert the following li
 Eric LaFontsee - jQuery
 Trilogy - CSS
 
+## Contact
+Email - elafontsee@gmail.com
 
 ## License
 MIT License
