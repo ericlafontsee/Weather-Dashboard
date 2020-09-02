@@ -20,12 +20,6 @@ form {
     font-size: 20px;
 }
 
-.card {
-    box-sizing: border-box;
-    width: 18%;
-    margin: 10px auto;
-}
-
 img,
 i {
     max-width: 100%;

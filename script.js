@@ -78,7 +78,8 @@ function weatherNow(city) {
             var year = unformatedDate.split("-")[0];
             var currentDate = $("<span>").text(" (" + month + "/" + day + "/" + year + ") ");
             var iconURL = "https://openweathermap.org/img/wn/" + response.list[0].weather[0].icon + "@2x.png";
-            var weatherIcon = $("<img>").attr("src", iconURL).addClass("img-fluid");
+            var iconAlt = response.list[0].weather[0].description;
+            var weatherIcon = $("<img>").attr("src", iconURL).addClass("img-fluid").attr("alt", iconAlt);
             $("#currentCity").text(response.city.name);
             $("#currentCity").append(currentDate);
             $("#currentCity").append(weatherIcon);
@@ -94,10 +95,10 @@ function weatherNow(city) {
                 var month = unformatedDate.split("-")[1].charAt(1);
                 var year = unformatedDate.split("-")[0];
                 var currentDate = " (" + month + "/" + day + "/" + year + ") ";
-                var iconURL = "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png";
-                var weatherIcon = $("<img>").attr("src", iconURL);
+                var iconAlt = response.list[0].weather[0].description;
+                var weatherIcon = $("<img>").attr("src", iconURL).addClass("img-fluid").attr("alt", iconAlt);
                 if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    var card = $("<div>").attr("class", "card text-light text-center border border-dark bg-primary");
+                    var card = $("<div>").attr("class", "card mx-auto mb-3 mt-3 text-light text-center border border-dark bg-primary");
                     $("#forecast").append(card);
                     var cardBody = $("<div>").attr("class", "card-body");
                     card.append(cardBody);
