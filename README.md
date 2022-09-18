@@ -10,8 +10,6 @@ When the application is exited and reopened, the user's last search result will 
 with the forecast as well.  
 
 
-This Work Day Scheduler is deployed to GitHub Pages:
-https://ericlafontsee.github.io/Weather-Dashboard/
 
 ## Features
 * Searched city's current temperature, wind speed, and humidity readings and the 5 day forecast.
